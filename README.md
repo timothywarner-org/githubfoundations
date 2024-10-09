@@ -1,6 +1,6 @@
 # GitHub Foundations Cert-Prep (Video) Course Resources
 
-Short link: [timw.info/github](https://github.com/timothywarner-org/githubfoundations)
+Short link for Microsoft Press peeps: [timw.info/github](https://github.com/timothywarner-org/githubfoundations)
 
 [![Check README Links](https://github.com/timothywarner-org/githubfoundations/actions/workflows/check-readme-links.yml/badge.svg)](https://github.com/timothywarner-org/githubfoundations/actions/workflows/check-readme-links.yml)
 [![Website](https://img.shields.io/badge/website-visit-green)](https://techtrainertim.com)
