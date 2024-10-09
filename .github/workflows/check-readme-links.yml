@@ -1,0 +1,41 @@
+name: Check README Links
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run lychee link checker
+        uses: lycheeverse/lychee-action@v1.9.3
+        with:
+          args: --verbose --format markdown --output ./lychee/lychee.md ./README.md
+
+      - name: Format Report
+        run: |
+          echo "### 📝 Link Checker Report" > ./lychee/final_report.md
+          echo "" >> ./lychee/final_report.md
+          echo "| Status | URL | Response |" >> ./lychee/final_report.md
+          echo "|--------|-----|----------|" >> ./lychee/final_report.md
+          cat ./lychee/lychee.md | grep -E "^\| [^\|]+" >> ./lychee/final_report.md
+          echo "" >> ./lychee/final_report.md
+          echo "🚨 **Failed links need attention!**" >> ./lychee/final_report.md
+
+      - name: Create issue on failure
+        if: failure()
+        uses: peter-evans/create-issue-from-file@v4
+        with:
+          title: Broken links found in README.md
+          content-filepath: ./lychee/final_report.md
+          labels: links
+
+      - name: Upload Link Checker Artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: link-checker-report
+          path: ./lychee/final_report.md
